@@ -1,29 +1,121 @@
+/* ============================================
+   SUPER ADMIN ANALYTICS
+   Flex-column chart cards with extremes display
+   ============================================ */
+
+/* ── Grid → Flex Column ── */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
+/* ── Cards (Glassmorphism) ── */
 .card {
-  background: rgba(15, 23, 42, 0.9);
-  border-radius: 0.9rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: var(--bg-surface);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--radius-xl);
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--transition-med),
+    box-shadow var(--transition-med),
+    border-color var(--transition-med);
+  animation: fadeInUp var(--transition-slow) both;
 }
 
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover), var(--shadow-glow);
+  border-color: var(--border-medium);
+}
+
+/* Full width is natural in flex-column */
 .card.full-width {
-  grid-column: 1 / -1;
+  width: 100%;
 }
 
 .card h3 {
-  margin-top: 0;
-  margin-bottom: 0.75rem;
+  margin: 0 0 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
+.card h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 1.1rem;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(to bottom, var(--accent-secondary), var(--accent-success));
+  flex-shrink: 0;
+}
+
+/* ── Extremes Section ── */
 .extremes {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
+.extremes > div {
+  flex: 1;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-lg);
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px solid var(--border-subtle);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.extremes > div:hover {
+  border-color: var(--border-medium);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.extremes h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
+.extremes > div:first-child h4 {
+  color: var(--accent-danger);
+}
+
+.extremes > div:last-child h4 {
+  color: var(--accent-success);
+}
+
+.extremes p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .card {
+    padding: 1.25rem 1.25rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .extremes {
+    flex-direction: column;
+  }
+}
